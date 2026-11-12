@@ -118,3 +118,10 @@ def test_backtest_choice_does_not_use_later_returns():
     changed = base.copy(); changed.loc[36:, ["SGOV", "IEF", "USIG", "VT"]] = 9.0
     altered = run_backtest(changed, cpi_vintages=vintages)["histories"]["Constrained portfolio"].iloc[0][["SGOV", "IEF", "USIG", "VT"]]
     assert original.to_numpy() == pytest.approx(altered.to_numpy())
+
+
+def test_benchmark_rebalancing_has_positive_turnover():
+    returns = pd.read_csv("data/monthly_returns.csv")
+    result = run_backtest(returns)
+    benchmark = result["summary"].set_index("portfolio").loc["60/40 benchmark"]
+    assert benchmark["average_turnover"] > 0

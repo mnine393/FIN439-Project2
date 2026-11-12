@@ -59,7 +59,10 @@ def run_backtest(monthly_returns: pd.DataFrame, *, trading_cost_basis_points: fl
         cpi_vintages, _ = load_cpi_vintages(decision_dates)
     inflation_by_date = dict(zip(pd.to_datetime(cpi_vintages["decision_date"]).dt.date, cpi_vintages["inflation"]))
     strategies = {"Constrained portfolio": [], "Equal weight": [], "60/40 benchmark": []}
-    previous = {name: None for name in strategies}
+    # These are the weights actually held after the previous month's returns.
+    # Comparing a new target with these drifted weights applies the same
+    # rebalance accounting to every strategy.
+    drifted = {name: None for name in strategies}
     values = {name: PORTFOLIO_SIZE_DOLLARS for name in strategies}
     cost_rate = trading_cost_basis_points / 10_000
     for index, decision_date in zip(decision_indexes, decision_dates):
@@ -70,8 +73,9 @@ def run_backtest(monthly_returns: pd.DataFrame, *, trading_cost_basis_points: fl
         for name, weights in current.items():
             if weights is None:
                 continue
-            turnover = 0.0 if previous[name] is None else sum(abs(a - b) for a, b in zip(weights, previous[name])) / 2
-            gross = float(np.dot(returns.iloc[index + 1].to_numpy(), weights))
+            turnover = 0.0 if drifted[name] is None else sum(abs(a - b) for a, b in zip(weights, drifted[name])) / 2
+            asset_returns = returns.iloc[index + 1].to_numpy()
+            gross = float(np.dot(asset_returns, weights))
             net = gross - turnover * cost_rate
             values[name] *= 1 + net
             held_month = months.iloc[index + 1]
@@ -80,6 +84,7 @@ def run_backtest(monthly_returns: pd.DataFrame, *, trading_cost_basis_points: fl
             strategies[name].append({"month": held_month, "value": values[name], "net_return": net,
                                      "turnover": turnover, "objective_not_reachable": unreachable if name == "Constrained portfolio" else False,
                                      **dict(zip(FUNDS, weights))})
-            previous[name] = weights
+            # Values grow at asset-specific rates before the next decision.
+            drifted[name] = tuple(np.asarray(weights) * (1 + asset_returns) / (1 + gross))
     return {"histories": {name: pd.DataFrame(rows) for name, rows in strategies.items()},
             "summary": pd.DataFrame([{"portfolio": name, **_metrics(rows)} for name, rows in strategies.items()])}

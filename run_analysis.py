@@ -11,8 +11,18 @@ from portfolio import estimate_from_monthly_returns, portfolio_metrics, search_l
 from simulation import simulate_portfolio
 from stress import run_stress
 
-def show_weights(weights): return ", ".join(f"{n} {w:.0%} (${w * PORTFOLIO_SIZE_DOLLARS:,.0f})" for n, w in zip(FUNDS, weights))
+def money(value): return "not applicable" if pd.isna(value) else f"${value:,.0f}"
+def rate(value): return "not applicable" if pd.isna(value) else f"{value:.2%}"
+def show_weights(weights): return ", ".join(f"{n} {rate(w)} ({money(w * PORTFOLIO_SIZE_DOLLARS)})" for n, w in zip(FUNDS, weights))
 def markdown_table(frame):
+    frame = frame.copy()
+    for column in frame:
+        name = column.lower()
+        if any(word in name for word in ("return", "volatility", "drop", "turnover", "probability", "weight", "change")):
+            frame[column] = frame[column].map(rate)
+        elif any(word in name for word in ("value", "dollars")):
+            frame[column] = frame[column].map(money)
+    frame = frame.fillna("not applicable")
     columns = list(frame.columns)
     rows = ["| " + " | ".join(map(str, columns)) + " |", "| " + " | ".join(["---"] * len(columns)) + " |"]
     rows += ["| " + " | ".join(map(str, row)) + " |" for row in frame.itertuples(index=False, name=None)]
@@ -29,11 +39,11 @@ def main():
     output = ["# FIN 439 Project 2 visible output", "", "## Material inputs", f"Decision date: {DEFAULT_DECISION_DATE}",
               f"Return file: data/monthly_returns.csv; funds: {', '.join(FUNDS)}", "Estimates use all monthly returns.",
               f"Portfolio size: ${PORTFOLIO_SIZE_DOLLARS:,.0f}; quarterly payout: ${QUARTERLY_PAYOUT_DOLLARS:,.0f}.",
-              "The 3% reserve rule equals four quarterly payouts divided by portfolio size.", "", "## CPI as known",
-              f"CPI year-over-year: {inflation:.2%}", f"Latest known month: {signal['month']}", f"First published: {publication}", f"Saved file: {location}", "", "## Portfolios"]
+              "The 3% reserve rule equals four quarterly payouts divided by portfolio size.", "", "## Consumer Price Index as known",
+              f"Consumer Price Index year-over-year: {rate(inflation)}", f"Latest known month: {signal['month']}", f"First published: {publication}", f"Saved file: {location}", "", "## Portfolios"]
     for name, weights in portfolios:
         expected, volatility = portfolio_metrics(weights, estimates)
-        output += [f"### {name}", f"Weights: {show_weights(weights)}", f"Expected return: {expected:.2%}", f"Volatility: {volatility:.2%}"]
+        output += [f"### {name}", f"Weights: {show_weights(weights)}", f"Expected return: {rate(expected)}", f"Volatility: {rate(volatility)}"]
     if constrained:
         output += ["", "## Stress"]
         output += [markdown_table(pd.DataFrame(run_stress(returns, inflation, constrained["weights"], .04)).drop(columns=["weights"]))]
