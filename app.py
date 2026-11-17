@@ -18,7 +18,7 @@ AI_STATEMENT = "AI use: built with OpenAI Codex (GPT-5.6-Terra) for the code and
 ADVICE_STATEMENT = "Education, not investment advice."
 COLORS = {"Constrained portfolio": "#22c1b6", "60/40 benchmark": "#d9a441", "Equal weight": "#9ca3af"}
 def money(x, compact=False): return "not applicable" if pd.isna(x) else (f"${x/1e6:,.1f} million" if compact else f"${x:,.0f}")
-def rate(x): return "not applicable" if pd.isna(x) else f"{x:.2%}"
+def rate(x): return x if isinstance(x, str) else "not applicable" if pd.isna(x) else f"{x:.2%}"
 def weights_text(w): return " | ".join(f"{f}: {rate(x)} ({money(x * PORTFOLIO_SIZE_DOLLARS)})" for f, x in zip(FUNDS, w))
 def verdict_frame(r): return pd.DataFrame({"Rule": [x["rule"] for x in r], "Verdict": ["Pass" if x["pass"] else "Fail" for x in r]})
 def card(label, value, detail="", color=""):
