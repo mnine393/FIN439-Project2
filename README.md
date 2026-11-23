@@ -19,6 +19,42 @@ It has two modes on one engine:
 The universe is four low-cost funds: **SGOV** (Treasury bills, the cash reserve), **IEF** (7-10 year Treasury bonds),
 **USIG** (investment-grade corporate bonds) and **VT** (global stocks).
 
+## The decision
+
+**Intended user:** the Meridian Foundation investment committee (institution mode), and an individual saver (personal mode).
+
+**Decision (as of September 30, 2026):** reject the optimizer, hold the 60/40 benchmark within ranges (VT 60%, 55% to
+65%; IEF 37%, 32% to 42%; SGOV at least 3%), and adopt Compass as the committee's quarterly testing and monitoring
+tool. Only 2 of 1,771 mixes meet the mandate, the optimizer turned $100 million into $134.3 million against $200.6
+million for the 60/40 in a point-in-time backtest, its stop condition triggers, and lowering VT's expected return by 2
+points leaves no mix at all. Full memo: [`docs/decision-memo.md`](docs/decision-memo.md).
+
+## Repository map
+
+| Where | What |
+|---|---|
+| `run.py`, `server.py` | Start the app; the web service that serves every page and result |
+| `web/` | The website (HTML, CSS, JavaScript; charts drawn with Plotly from `web/vendor/`) |
+| `mandate.py`, `recommendation.py` | The mandate rules and checks; the committee recommendation |
+| `cpi_signal.py`, `data.py`, `data/` | Point-in-time inflation (ALFRED), fund returns (Yahoo Finance), Treasury bill and yield data (FRED), saved copies |
+| `portfolio.py`, `mixes.py`, `frontier.py` | Mix search (5-point grid, optimizer for 9 to 15 holdings) and the efficient frontier |
+| `simulation.py`, `backtest.py`, `stress.py` | 10,000-path simulation, point-in-time backtest, stress run and stop condition |
+| `forecast.py`, `analyze.py` | Improved forecast, forecast accuracy test, crisis replays, portfolio analyzer |
+| `personal.py` | Personal plans: emergency reserve, required return, odds, ways to make it work |
+| `committee.py`, `memos/` | Committee checks, votes and saved memos |
+| `legends.py`, `screens.py` | Buffett and Burry 13F holdings; Buffett and Burry stock screens from 10-K filings |
+| `assistant.py`, `assistant_offline.py` | Ask Compass chat: free built-in mode, optional Claude mode, number check |
+| `locked_run.py`, `output/` | The Locked Changed-Input run and the visible executed output |
+| `tests/` | 86 tests (`python -m pytest -q`) |
+| `docs/` | Decision memo, validation and AI use record, data cards, AI-use log |
+
+## Known limitations
+
+- 18 years of history (2008 to 2026) is short and unusual, and the answer is sensitive to expected-return estimates.
+- Yahoo adjusted prices are recalculated after later dividends, so they are not strictly point-in-time.
+- The forecast's three-year ranges are too wide (98% of past outcomes fell inside an 80% range).
+- Taxes are ignored and trading costs are a flat charge. Full list: `docs/validation-and-ai-use.md`, section 4.
+
 ## Legend portfolios
 
 The legend endpoints read public Form 13F filings for Warren Buffett and Michael Burry. A filing reports a manager's
@@ -28,10 +64,15 @@ same point-in-time date and does not test today's disclosed weights on earlier y
 
 ## Choose your own funds
 
-The application programming interface also accepts a universe of two to eight Yahoo Finance tickers.  Compass saves
-monthly adjusted closes in `data/prices/` so later runs work offline, assigns familiar tickers a fund role, and uses a
-five percentage point grid for up to five funds or a ten percentage point grid for six to eight funds.  The original
-four-fund universe remains the default and continues to use its historical Treasury bill proxy.
+Plans accept a universe of 2 to 15 Yahoo Finance tickers. Compass saves monthly adjusted closes in `data/prices/` so
+later runs work offline, assigns familiar tickers a fund role, and uses a five percentage point grid for up to five
+funds, a ten percentage point grid for six to eight, and an optimizer for nine to fifteen. The original four-fund
+universe remains the default and continues to use its historical Treasury bill proxy.
+
+The **Analyze** page takes any portfolio (tickers and dollars) and shows its risk score, where the risk comes from,
+crisis replays (2008, 2020, 2022, a high-inflation year), a forecast range, and a test of how accurate past forecasts
+were. **Ask Compass** (bottom-right button) answers questions by running the engine; it is free in its built-in mode
+and needs no key. See `docs/ai-assistant.md`.
 
 ## Run it (one command)
 

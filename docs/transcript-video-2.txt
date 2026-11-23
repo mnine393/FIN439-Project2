@@ -1,0 +1,40 @@
+FIN 439 Project 2 - Video 2: Code walkthrough
+https://youtu.be/rx07mjb-1vc
+Duration: 4:41
+Speaker: Miles Nine
+Corrected from YouTube's automatic captions (finance terms, tickers, names, file names and numbers corrected; filler words left as spoken).
+
+[0:00] Hi, I'm Miles Nine, and for this project I used OpenAI's Codex to build the analysis engine and Claude to build the
+[0:09] website and help me check my work. But the analysis and the decision are all mine. This is for education and is not investment advice.
+[0:19] So looking at this, Compass is a Python engine with a website on top. Data
+[0:26] flows one way. First, it loads fund returns and inflation as known on the decision date. Then, it searches every
+[0:35] mix against the mandate rules, tests the winner, and then shows the
+[0:41] results in the app and in the output/visible_output.md file. To reproduce it, install
+[0:50] the requirements and run python run_analysis.py, or run python run.py for the
+[0:58] app. So getting into the mandate, these are the mandate rules in code. Every
+[1:05] portfolio gets a pass or fail on each one: long-only, no fund over 60%,
+[1:15] at least 3% in cash and bonds to cover a year of payouts, and a return of inflation plus 4%. Those are the green and red labels in the app.
+[1:28] Moving on, inflation is my point-in-time signal. It comes from ALFRED,
+[1:35] which saves every version of the inflation number as it was first published. On my decision date, the last known number was 3.35%.
+[1:47] The code uses that, not today's revised number. That stops look-ahead bias.
+[1:57] The optimizer, as you see here, checks all 1,771
+[2:03] mixes in 5% steps and keeps the safest one that passes. I used a simple grid on
+[2:12] purpose, so you can see every mix that it tried. The backtest repeats that
+[2:18] choice every month, using only the data known that month.
+[2:25] A test changes all the later data to crazy values and proves the earlier choices didn't move.
+[2:37] And here's that backtest.
+[2:42] So the stress test now changes one input at
+[2:48] a time: returns, the data window, costs, and the rules. If the mix swings more
+[2:55] than 20 points, or no mix works, the process stops, and mine stopped.
+[3:02] So now I'll show you my riskiest claim.
+[3:06] We're going to go to the terminal and run this code.
+[3:17] So my riskiest claim is that the optimizer breaks easily, because the whole recommendation depends on it. So
+[3:26] here's the test, live. It lowers stocks' expected return by 2%, by two points, and
+[3:33] changes nothing else. Before, the optimizer picked a mix with a 47% chance to hit the target, as we can see here.
+[3:45] After, there's no mix that meets the rules at all.
+[3:53] I also improved the forecast.
+[3:58] As we can see here, it draws full 12-month stretches of history, so crashes stay together. And
+[4:06] this line fixes the 1970 bug. Data without dates now gets refused instead of silently guessed.
+[4:15] It isn't perfect. The three-year forecast ranges are too wide, and everything rests on only 18 years of data. So, here's how I built it to be
+[4:24] trusted. 86 tests pass, and every number comes from code, not the AI. That's why I'm confident in the result, even though
+[4:34] the result is to reject my own optimizer. Thank you.

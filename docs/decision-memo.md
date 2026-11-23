@@ -54,6 +54,25 @@ What the app found:
 simple, stable mix reliably reaches 7.35% with these funds and rules. The optimizer only "passes" on paper, by a
 hundredth of a point.
 
+## Material assumptions and sensitivities
+
+- **Expected returns are all-history averages** of monthly returns, July 2008 to September 2026: VT 9.88%, USIG 3.87%,
+  IEF 2.73%, SGOV 1.38% a year. Volatility is the risk measure.
+- **The objective depends on inflation as known** (3.35%). A higher inflation print raises the 7.35% target one for one.
+- **Sensitivities from the stress run:** lowering VT or USIG by 1 point leaves no mix that meets the mandate; using
+  only the last 60 or 36 months moves the optimizer's mix by 55 to 60 points; a 10 basis point trading cost pushes it
+  below the objective. Lowering VT by 2 points cuts the 60/40's chance of meeting the objective from 44.3% to 32.5%.
+
+## Principal risks and failure conditions (for the 60/40)
+
+- **Return shortfall:** expected 7.02% against the 7.35% objective; a 37.26% chance of dipping below $90 million
+  within seven years (10,000 simulations).
+- **Market drops:** replaying real crises on this mix gives -26.1% in the 2008 financial crisis, -10.3% in the 2020
+  COVID crash and -19.0% in the 2022 rate shock, when stocks and bonds fell together.
+- **Inflation:** a high-inflation year hurts both VT and IEF and raises the objective at the same time.
+- **Failure condition:** the plan needs a committee review if the portfolio falls below $90 million or if inflation
+  moves the objective by more than 1 point (see the triggers below).
+
 ## Allocation range
 
 | Fund | Target | Range |

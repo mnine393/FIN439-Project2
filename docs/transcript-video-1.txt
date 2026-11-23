@@ -1,0 +1,27 @@
+FIN 439 Project 2 - Video 1: How my thinking changed
+https://youtu.be/gk8MM6TMAbg
+Duration: 2:50
+Speaker: Miles Nine
+Corrected from YouTube's automatic captions (finance terms, tickers, names and numbers corrected; filler words left as spoken).
+
+[0:00] Hi, I'm Miles Nine, and for this I used OpenAI Codex to build the analysis
+[0:07] engine and Claude to build the website and help me check the work. The analysis and decision were all mine, and this is for education, not investment advice.
+[0:19] So, for this project, I built this app, and my client has a $100 million reserve
+[0:27] that pays out $750,000 every quarter. And this foundation needs a 7.35%
+[0:36] return a year. So, I started thinking an optimizer would be best at picking the mix, would
+[0:44] pick the best mix of the four funds, would be the answer.
+[0:49] But on my own testing, I changed my mind, not the AI. Only two
+[0:57] out of 1,771 mixes met the rules, and the optimizer
+[1:03] only turned $100 million into $134 million.
+[1:10] Well, when we go here, we see the value of a plain 60/40 made about $201 million.
+[1:23] When I locked in a prediction, um, it was that stocks earned two points
+[1:31] less, but no mix worked at all.
+[1:38] Three different tests agreed, so I trusted it. I went from building an optimizer to building a tool that tests
+[1:46] one, which was kind of interesting as it went on. So looking at the VS Code, I needed
+[1:55] to go in and check the AI output. One AI output I checked was that the AI's
+[2:02] improved forecast used interest rates from 1970, not the ones from 2026.
+[2:11] And I found that by looking through here. It didn't crash, it just gave wrong numbers that really looked fine. So I corrected it to be 2026.
+[2:21] And now the code refuses data without dates and prints the dates it used. So
+[2:28] the lesson I took from this was the worst AI mistakes are the ones that look right and can fool you.
+[2:36] So my call is to reject the optimizer, hold the 60/40,
+[2:43] and use Compass to test strategies before adopting them.

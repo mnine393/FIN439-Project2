@@ -1,0 +1,42 @@
+FIN 439 Project 2 - Video 3: Committee presentation
+https://youtu.be/mapiTfLlAOY
+Duration: 4:38
+Speaker: Miles Nine
+Corrected from YouTube's automatic captions (finance terms, tickers, names and numbers corrected; filler words left as spoken).
+
+[0:00] Good afternoon. I'm Miles Nine, and this is Compass, running live. I used OpenAI's Codex to build the analysis engine and
+[0:09] Claude to build the website and check the work. But the analysis and the decision are all mine. This is for education and is not investment advice.
+[0:19] So first, let's look at my recommendation: reject the optimizer and hold a 60/40 portfolio within the set
+[0:27] ranges, and adopt Compass as your quarterly testing and monitoring tool.
+[0:34] The mandate, as we can see here, is $100 million, with $750,000
+[0:43] paid out every quarter. The target is 7.35% a year, which is inflation
+[0:50] of 3.35% plus 4%. No fund over 60%, and at least 3% in cash and bonds to cover payouts.
+[1:02] So, here's the evidence.
+[1:07] Only two of the 1,771 mixes meet the rules,
+[1:14] so the target is barely reachable.
+[1:17] We look at the backtest chart. We see the optimizer turned $100 million into
+[1:24] $134 million, and the simple 60/40 made $201 million,
+[1:34] with a smaller worst drop. It's also unstable. The stop condition
+[1:40] triggered: small changes move the mix by up to 60 points. And in my locked prediction, with stocks 2% lower, no mix
+[1:50] even worked at all. So the committee review voted to oppose. And we see all this in the stress lab.
+[2:00] Now, my main assumption is that the last 18 years are a fair guide. The results are
+[2:08] sensitive to that: one point less from stocks and no mix works at all.
+[2:13] The 60/40 has risks too. It's expected to return 7.02%, just under target. In the 2008
+[2:23] replay it lost 26%, and 19% in 2022. But a stricter forecast
+[2:33] gives it the better worst case after seven years of payouts.
+[2:40] So here's the allocation, going back to the recommendation box:
+[2:46] VT, global stocks, between 55 and 65%;
+[2:51] IEF, government bonds, between 32 and 42%; and at least 3% in cash for payouts.
+[2:58] Then rebalance when VT leaves its range.
+[3:03] Review if the portfolio drops below $90 million, or if inflation moves the target by a point. I'd only revisit the
+[3:11] optimizer if it beats the 60/40 and stops flipping its mix.
+[3:18] So, here's why you should really adopt the app. We're going to go over here to the Analyze tab, and I plugged in the 60/40
+[3:28] that I'm recommending, and you can see its risk score here,
+[3:36] and how it did in real crises, and a forecast range. That forecast method is
+[3:42] checked against its own past forecasts, so you know how far to trust it. Next
+[3:49] time someone brings you a strategy, you can test it here in seconds, before you approve it.
+[3:59] So I'm asking the committee for only three things. One, approve the 60/40
+[4:06] within these ranges, and reject the optimizer.
+[4:11] Two, adopt Compass for quarterly monitoring. And three, decide on the gap. The 60/40 is expected to land about 0.3% under target.
+[4:24] You can accept that, or lower the target or the payout. The simple plan beat the complicated one, and this tool is how
+[4:32] we'll keep checking that. Thank you. I'm happy to take any questions.

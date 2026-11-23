@@ -51,7 +51,7 @@ function recommendationHtml(recommendation) {
   const triggers = (recommendation.triggers ?? []).map((trigger) => `<li>${escapeHtml(trigger)}</li>`).join("");
   return `<div class="card stack">
     <p class="group-title">Recommendation</p>
-    <div style="font-size:30px;font-weight:800;text-transform:capitalize">${escapeHtml(recommendation.action)}</div>
+    <div style="font-size:30px;font-weight:800;line-height:1.2">${escapeHtml(recommendation.action)}</div>
     <div class="kv"><span>Allocation range</span><span>${escapeHtml(recommendation.allocation_range)}</span></div>
     <div class="kv"><span>Conditions</span><span>${escapeHtml(recommendation.conditions)}</span></div>
     <div><p class="group-title" style="margin-top:8px">Triggers to monitor</p><ul style="margin:6px 0 0;padding-left:20px">${triggers}</ul></div>
