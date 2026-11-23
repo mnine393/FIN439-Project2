@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compass</title>
+  <meta name="description" content="Compass: an investment committee in your pocket. Education, not investment advice.">
+  <script>
+    // Apply the saved theme before the page paints, so there is no flash of the wrong colors.
+    try {
+      const saved = localStorage.getItem("compass.theme");
+      if (saved === "light" || saved === "dark") document.documentElement.dataset.theme = saved;
+    } catch (error) { /* storage blocked: follow the computer's setting */ }
+  </script>
+  <link rel="stylesheet" href="/css/compass.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#/personal" aria-label="Compass home">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M20.5 11.5l-2.6 6.4-6.4 2.6 2.6-6.4z" fill="currentColor"/>
+          <circle cx="16" cy="16" r="1.4" fill="#fff"/>
+        </svg>
+        <span>Compass</span>
+      </a>
+      <nav class="mode-switch" aria-label="Mode">
+        <a href="#/personal" data-mode="personal">Personal</a>
+        <a href="#/analyze" data-mode="analyze">Analyze</a>
+        <a href="#/institution/summary" data-mode="institution">Institution</a>
+        <a href="#/legends" data-mode="legends">Legends</a>
+      </nav>
+      <button class="button ghost" id="print-button" type="button">Print report</button>
+      <button class="icon-button" id="help-button" type="button" aria-label="How to use Compass" title="How to use Compass">?</button>
+      <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark theme" title="Light or dark theme">◐</button>
+    </div>
+    <div class="disclosure" id="disclosure">
+      <span>AI use: OpenAI Codex (GPT-5.6-Terra) built the analysis engine; Claude built the website and helped plan and check; the analysis and the decision are mine.</span>
+      <span>Education, not investment advice.</span>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p><strong>Compass</strong> · Built for FIN 439, Project 2.</p>
+      <p>Data: Yahoo Finance monthly adjusted prices; Federal Reserve Bank of St. Louis (FRED for Treasury bill
+        rates, ALFRED for the Consumer Price Index as it was known on each date).</p>
+      <p id="footer-statements">Education, not investment advice.</p>
+    </div>
+  </footer>
+
+  <script src="/vendor/plotly.min.js"></script>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

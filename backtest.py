@@ -49,7 +49,7 @@ def _metrics(history: list[dict]) -> dict:
 
 
 def run_backtest(monthly_returns: pd.DataFrame, *, trading_cost_basis_points: float = 10,
-                 cpi_vintages: pd.DataFrame | None = None) -> dict:
+                 cpi_vintages: pd.DataFrame | None = None, mandate=None) -> dict:
     """Backtest constrained, equal-weight, and benchmark portfolios without future return use."""
     returns = monthly_returns.loc[:, list(FUNDS)].reset_index(drop=True)
     months = pd.to_datetime(monthly_returns["month"]).reset_index(drop=True)

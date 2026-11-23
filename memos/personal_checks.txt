@@ -1,0 +1,12 @@
+Endowment Builder | vote: Approve with conditions
+  - Stocks (VT) are at least 50%: pass (70.00% vs at least 50.00%)
+  - Chance of meeting the objective or goal is at least 50%: fail (40.54% vs at least 50.00%)
+  - Horizon is at least 7 years: pass (30 years vs at least 7 years)
+Indexer | vote: Oppose
+  - Plan ending value is at or above the 60/40 benchmark: fail ($438,012 vs $464,820)
+  - Average monthly turnover is at most 2%: fail (11.49% vs at most 2.00%)
+  - Stop condition is not triggered: fail (triggered vs stable)
+Risk Skeptic | vote: Approve with conditions
+  - Plan worst backtest drop is no worse than the 60/40 benchmark: fail (-21.66% vs -18.27%)
+  - A mix still meets the mandate when VT expected return is one point lower: pass (yes vs yes)
+  - Bad outcome is unlikely: pass ($503,379 vs $500,000)

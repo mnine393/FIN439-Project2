@@ -1,0 +1,25 @@
+Plan for: Meridian Foundation
+Objective (return above inflation): 4.00%
+Inflation: 3.35% (2026-08-01)
+Horizon: 7 years
+Plan weight SGOV: 0.00%
+Plan weight IEF: 10.00%
+Plan weight USIG: 30.00%
+Plan weight VT: 60.00%
+Expected return: 7.36%
+Volatility: 11.23%
+Worst 12-month return: -19.29%
+Chance of meeting the objective: 47.23%
+Chance of falling below $90 million: 40.00%
+Median ending value: $134,131,071
+Point-in-time backtest ending value for the constrained portfolio: $134,296,207
+Worst backtest drop for the constrained portfolio: -27.24%
+Point-in-time backtest ending value for the 60/40 benchmark: $200,614,136
+Worst backtest drop for the 60/40 benchmark: -22.99%
+Point-in-time backtest ending value for equal weight: $126,112,544
+Worst backtest drop for equal weight: -17.78%
+Months the objective was not reachable: 58
+Average monthly turnover: 9.54%
+Stop condition: triggered; 8 cases; largest weight change 60.00%; case Estimate window: last 36 months
+Mix still meets the mandate when VT expected return is one point lower: no
+Trading cost at which the plan stops meeting the objective: Trading cost 10 basis points

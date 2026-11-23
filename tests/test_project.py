@@ -83,12 +83,12 @@ def test_stress_costs_use_benchmark_turnover_and_cases_are_independent():
     prices = pd.read_csv("prices.csv")
     rows = run_stress(prices, .03, (.50, 0, 0, .50), .04)
     cases = [row["case"] for row in rows]
-    assert "Last 36 monthly returns" in cases
-    assert not any("Last 36 monthly returns;" in case for case in cases)
+    assert "Estimate window: last 36 months" in cases
+    assert not any("Estimate window: last 36 months;" in case for case in cases)
     assert "Reserve minimum 10%" in cases
-    assert "60% cap off" in cases
+    assert "60% fund cap removed" in cases
     assert not any("; 60% cap" in case for case in cases)
-    cost_row = next(row for row in rows if row["case"] == "Transaction cost 10 basis points")
+    cost_row = next(row for row in rows if row["case"] == "Trading cost 10 basis points")
     expected_turnover = sum(abs(weight - benchmark_weight) for weight, benchmark_weight in zip(cost_row["weights"], BENCHMARK_WEIGHTS)) / 2
     expected_trading_cost_dollars = expected_turnover * .001 * 100_000_000
     assert cost_row["turnover"] == pytest.approx(expected_turnover)

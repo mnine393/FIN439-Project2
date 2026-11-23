@@ -9,26 +9,34 @@ from mandate import HORIZON_YEARS, PORTFOLIO_SIZE_DOLLARS, QUARTERLY_PAYOUT_DOLL
 MONTHS = HORIZON_YEARS * 12
 
 
-def simulate_portfolio(monthly_returns: pd.DataFrame, weights, objective: float, *, method="Historical bootstrap",
-                       seed: int = 439, paths: int = 10_000) -> dict:
+def simulate_portfolio(monthly_returns: pd.DataFrame, weights, objective: float | None = None, *, method="Historical bootstrap",
+                       seed: int = 439, paths: int = 10_000, mandate=None) -> dict:
     """Simulate portfolio returns and quarterly spending with a deterministic seed."""
+    if mandate is not None:
+        objective = mandate.objective(0.0) if objective is None else objective
+        months = mandate.horizon_years * 12
+        starting_value, flow, frequency = mandate.portfolio_size_dollars, mandate.cash_flow_amount, mandate.cash_flow_frequency
+    else:
+        months, starting_value, flow, frequency = MONTHS, PORTFOLIO_SIZE_DOLLARS, QUARTERLY_PAYOUT_DOLLARS, "quarterly payout"
     values = monthly_returns.to_numpy(dtype=float)
     weights = np.asarray(weights, dtype=float)
     rng = np.random.default_rng(seed)
     if method == "Historical bootstrap":
-        draws = rng.integers(0, len(values), size=(paths, MONTHS))
+        draws = rng.integers(0, len(values), size=(paths, months))
         path_returns = values[draws] @ weights
     elif method == "Normal distribution":
-        path_returns = rng.multivariate_normal(values.mean(axis=0), np.cov(values, rowvar=False), size=(paths, MONTHS)) @ weights
+        path_returns = rng.multivariate_normal(values.mean(axis=0), np.cov(values, rowvar=False), size=(paths, months)) @ weights
     else:
         raise ValueError("Simulation method must be Historical bootstrap or Normal distribution.")
-    before_payout_return = np.prod(1 + path_returns, axis=1) ** (12 / MONTHS) - 1
-    dollar_values = np.empty((paths, MONTHS + 1), dtype=float)
-    dollar_values[:, 0] = PORTFOLIO_SIZE_DOLLARS
-    for month in range(MONTHS):
+    before_payout_return = np.prod(1 + path_returns, axis=1) ** (12 / months) - 1
+    dollar_values = np.empty((paths, months + 1), dtype=float)
+    dollar_values[:, 0] = starting_value
+    for month in range(months):
         dollar_values[:, month + 1] = dollar_values[:, month] * (1 + path_returns[:, month])
-        if (month + 1) % 3 == 0:
-            dollar_values[:, month + 1] -= QUARTERLY_PAYOUT_DOLLARS
+        if frequency == "quarterly payout" and (month + 1) % 3 == 0:
+            dollar_values[:, month + 1] -= flow
+        elif frequency == "monthly contribution":
+            dollar_values[:, month + 1] += flow
     return {"values": dollar_values, "annualized_returns": before_payout_return,
             "probability_objective": float(np.mean(before_payout_return >= objective)),
             "probability_below_90m": float(np.mean(np.min(dollar_values, axis=1) < 90_000_000)),

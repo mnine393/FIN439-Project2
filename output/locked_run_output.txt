@@ -1,0 +1,12 @@
+
+BASE: VT expected return 9.88%, objective 7.35%
+  constrained portfolio: {'SGOV': 0, 'IEF': 10, 'USIG': 30, 'VT': 60} return 7.36% volatility 11.23%
+  Constrained (base mix): chance of objective 47.2%, below $90M 40.0%, median $134.1M
+  60/40 benchmark: chance of objective 44.3%, below $90M 37.3%, median $131.3M
+  Equal weight: chance of objective 9.7%, below $90M 26.2%, median $110.9M
+
+CHANGED (VT -2 points): VT expected return 7.88%, objective 7.35%
+  constrained portfolio: no mix meets the mandate
+  Constrained (base mix): chance of objective 36.3%, below $90M 46.9%, median $122.4M
+  60/40 benchmark: chance of objective 32.5%, below $90M 45.0%, median $119.8M
+  Equal weight: chance of objective 6.5%, below $90M 32.4%, median $106.7M

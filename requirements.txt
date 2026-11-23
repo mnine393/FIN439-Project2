@@ -3,3 +3,9 @@ pandas
 altair
 pytest
 numpy
+scipy
+fastapi
+uvicorn
+httpx
+ # Optional: needed only for live committee reviews; do not place keys in this file.
+anthropic

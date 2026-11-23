@@ -1,0 +1,29 @@
+Plan for: Personal savings plan
+Objective (return needed): 7.87%
+Inflation: 3.35%
+Goal: $1,000,000
+Half of the goal: $500,000
+Horizon: 30 years
+Plan weight SGOV: 0.00%
+Plan weight IEF: 15.00%
+Plan weight USIG: 15.00%
+Plan weight VT: 70.00%
+Expected return: 7.90%
+Volatility: 12.26%
+Worst 12-month return: -19.47%
+Chance of meeting the goal: 40.54%
+10th percentile ending value: $503,379
+Median ending value: $898,168
+90th percentile ending value: $1,614,730
+Monthly contribution for an 80% chance: $2,025
+Point-in-time backtest ending value for the plan: $438,012
+Worst backtest drop for the plan: -21.66%
+Point-in-time backtest ending value for the 60/40 benchmark: $464,820
+Worst backtest drop for the 60/40 benchmark: -18.27%
+Point-in-time backtest ending value for equal weight: $354,439
+Worst backtest drop for equal weight: -10.69%
+Months the objective was not reachable: 36
+Average monthly turnover: 11.49%
+Total contributed in the backtest: $216,000
+Stop condition: triggered; 3 cases; largest weight change 75.00%; case Estimate window: last 36 months
+Mix still meets the mandate when VT expected return is one point lower: yes
